@@ -14,28 +14,28 @@ public class Study {
 
 	public List<Integer> studyList = new ArrayList<Integer>();
 	public Integer studyPointer = 0;
-	
+
 	private static Study studyImpl = new Study();
-	
+
 	private Study() {
 		try (Stream<String> stream = Files.lines(Paths.get(Constants.STUDIES_LOCATION))) {
-			stream.forEach(item ->{
+			stream.forEach(item -> {
 				studyList.add(Integer.parseInt(item));
 			});
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public synchronized Integer getStudyId() {
-		if(studyList.size() <= (studyPointer + 1)) {
-			studyPointer=0;
+		if (studyList.size() <= (studyPointer + 1)) {
+			studyPointer = 0;
 		} else {
 			studyPointer++;
 		}
 		return studyList.get(studyPointer);
 	}
-	
+
 	public static Study getInstance() {
 		return studyImpl;
 	}
